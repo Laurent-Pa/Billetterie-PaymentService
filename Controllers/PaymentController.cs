@@ -51,7 +51,8 @@ namespace PaymentService.Controllers
                     OrderId = request.OrderId,
                     ProcessedAt = DateTime.UtcNow,
                     ErrorMessage = result.ErrorMessage,
-                    TransactionId = result.TransactionId
+                    TransactionId = result.TransactionId,
+                    ClientSecret = result.ClientSecret
                 };
 
                 if (result.IsSuccess)

@@ -10,5 +10,6 @@
         public DateTime ProcessedAt { get; set; }
         public string? ErrorMessage { get; set; }
         public string? TransactionId { get; set; } // ID Stripe ou autre provider
+        public string? ClientSecret { get; set; } // Pour confirmation côté client
     }
 }

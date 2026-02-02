@@ -31,13 +31,13 @@ namespace PaymentService.Services.Implementations
                     {
                         { "order_id", orderId }
                     },
-                    // Auto-confirmation pour simplifier (en prod, tu ferais une confirmation côté client)
-                    Confirm = true,
-                    AutomaticPaymentMethods = new PaymentIntentAutomaticPaymentMethodsOptions
-                    {
-                        Enabled = true,
-                        AllowRedirects = "never"
-                    }
+                    // Auto-confirmation pour simplifier (en prod confirmation côté client)
+                    //Confirm = true,
+                    //AutomaticPaymentMethods = new PaymentIntentAutomaticPaymentMethodsOptions
+                    //{
+                    //    Enabled = true,
+                    //    AllowRedirects = "never"
+                    //}
                 };
 
                 var service = new PaymentIntentService();
@@ -48,12 +48,13 @@ namespace PaymentService.Services.Implementations
 
                 return new PaymentResult
                 {
-                    IsSuccess = paymentIntent.Status == "succeeded",
+                    IsSuccess = true,
                     PaymentId = paymentIntent.Id,
                     TransactionId = paymentIntent.Id,
                     Status = paymentIntent.Status,
                     Amount = amount,
                     Currency = currency,
+                    ClientSecret = paymentIntent.ClientSecret,
                     ErrorMessage = paymentIntent.Status != "succeeded"
                         ? $"Payment status: {paymentIntent.Status}"
                         : null
