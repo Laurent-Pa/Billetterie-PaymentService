@@ -9,5 +9,6 @@
         public string? ErrorMessage { get; set; }
         public decimal Amount { get; set; }
         public string Currency { get; set; } = string.Empty;
+        public string? ClientSecret { get; set; } // Pour confirmation côté client
     }
 }
