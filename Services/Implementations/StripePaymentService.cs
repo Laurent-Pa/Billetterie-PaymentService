@@ -1,4 +1,4 @@
-﻿using PaymentService.Models;
+using PaymentService.Models;
 using PaymentService.Services.Interfaces;
 using Stripe;
 
@@ -18,15 +18,30 @@ namespace PaymentService.Services.Implementations
             StripeConfiguration.ApiKey = _apiKey;
         }
 
-        public async Task<PaymentResult> ProcessPaymentAsync(decimal amount, string currency, string orderId)
+        public async Task<PaymentResult> ProcessPaymentAsync(
+            decimal amount,
+            string currency,
+            string orderId,
+            string? paymentMethodId = null,
+            string? customerEmail = null,
+            string? description = null)
         {
             try
             {
+                if (string.IsNullOrWhiteSpace(paymentMethodId))
+                {
+                    throw new InvalidOperationException("Stripe PaymentMethodId is required for payment confirmation");
+                }
+
                 PaymentIntentCreateOptions options = new()
                 {
                     Amount = (long)(amount * 100), // Stripe utilise les centimes
                     Currency = currency.ToLower(),
-                    Description = $"Order {orderId}",
+                    Description = description ?? $"Order {orderId}",
+                    PaymentMethod = paymentMethodId,
+                    Confirm = true,
+                    ReceiptEmail = customerEmail,
+                    PaymentMethodTypes = new List<string> { "card" },
                     Metadata = new Dictionary<string, string>
                     {
                         { "order_id", orderId }

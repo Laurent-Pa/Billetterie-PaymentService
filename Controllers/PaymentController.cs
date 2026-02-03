@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using PaymentService.DTOs;
 using PaymentService.Services.Interfaces;
 
@@ -39,7 +39,10 @@ namespace PaymentService.Controllers
                 var result = await _paymentService.ProcessPaymentAsync(
                     request.Amount,
                     request.Currency,
-                    request.OrderId
+                    request.OrderId,
+                    request.PaymentMethodId,
+                    request.CustomerEmail,
+                    request.Description
                 );
 
                 var response = new PaymentResponseDto

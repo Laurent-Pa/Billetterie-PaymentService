@@ -1,4 +1,4 @@
-﻿using PaymentService.Models;
+using PaymentService.Models;
 using PaymentService.Services.Interfaces;
 
 namespace PaymentService.Services.Implementations
@@ -7,7 +7,13 @@ namespace PaymentService.Services.Implementations
     {
         private readonly Dictionary<string, PaymentResult> _payments = [];
 
-        public async Task<PaymentResult> ProcessPaymentAsync(decimal amount, string currency, string orderId)
+        public async Task<PaymentResult> ProcessPaymentAsync(
+            decimal amount,
+            string currency,
+            string orderId,
+            string? paymentMethodId = null,
+            string? customerEmail = null,
+            string? description = null)
         {
             // Simulation d'un délai réseau
             await Task.Delay(500);
